@@ -8,20 +8,23 @@ sphero.on('connected', function() {
         sphero.setStabilization(false);
         sphero.setDataStreaming([
                 sphero.sensors.accelerometer_x,
-                sphero.sensors.accelerometer_y
+                sphero.sensors.accelerometer_y,
+                sphero.sensors.accelerometer_z
         ]);
 });
 
 sphero.on('notification', function(message) {
         var accel = {
                 x: message.DATA.readInt16BE(0),
-                y: message.DATA.readInt16BE(2)
+                y: message.DATA.readInt16BE(2),
+                z: message.DATA.readInt16BE(4)
         };
 
         if (last) {
                 var dx = accel.x - last.x;
                 var dy = accel.y - last.y;
-                var dist = Math.sqrt(dx * dx + dy * dy);
+                var dz = accel.z - last.z;
+                var dist = Math.pow(dx*dx*dx + dy*dy*dy + dz*dz*dz, 1/3);
 
                 console.log(dist);
 
