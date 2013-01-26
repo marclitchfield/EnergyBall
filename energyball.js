@@ -11,6 +11,7 @@ Math.cbrt = function(x) {
 
 sphero.on('connected', function() {
         sphero.setStabilization(false);
+        sphero.setBackLED(0);
         sphero.setDataStreaming([
                 sphero.sensors.accelerometer_x,
                 sphero.sensors.accelerometer_y,
